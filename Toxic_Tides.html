@@ -1,0 +1,696 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Toxic Tides</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --dark: #1a252f;
+            --success: #2ecc71;
+            --warning: #f39c12;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--dark) 100%);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            line-height: 1.6;
+        }
+        
+        .game-container {
+            width: 100%;
+            max-width: 900px;
+            background: rgba(26, 37, 47, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            min-height: 85vh;
+        }
+        
+        .game-header {
+            background: rgba(44, 62, 80, 0.95);
+            padding: 25px;
+            text-align: center;
+            border-bottom: 3px solid var(--secondary);
+        }
+        
+        .game-title {
+            font-size: 2.8rem;
+            margin-bottom: 10px;
+            color: var(--light);
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+        }
+        
+        .game-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+        
+        .content-area {
+            display: flex;
+            flex: 1;
+            padding: 0;
+        }
+        
+        .character-section {
+            width: 30%;
+            background: rgba(33, 47, 60, 0.8);
+            padding: 25px;
+            border-right: 2px solid var(--dark);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        
+        .character-image {
+            width: 160px;
+            height: 160px;
+            border-radius: 50%;
+            background: var(--dark);
+            margin-bottom: 20px;
+            border: 4px solid var(--secondary);
+            overflow: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 4rem;
+        }
+        
+        .character-name {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+        
+        .character-role {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-bottom: 25px;
+        }
+        
+        .stats-container {
+            width: 100%;
+            background: rgba(26, 37, 47, 0.7);
+            border-radius: 10px;
+            padding: 15px;
+            margin-top: 10px;
+        }
+        
+        .stat-bar {
+            margin-bottom: 15px;
+        }
+        
+        .stat-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 5px;
+            font-size: 0.9rem;
+        }
+        
+        .stat-meter {
+            height: 10px;
+            background: var(--dark);
+            border-radius: 5px;
+            overflow: hidden;
+        }
+        
+        .stat-fill {
+            height: 100%;
+            border-radius: 5px;
+        }
+        
+        .mental-health { background: var(--secondary); width: 60%; }
+        .self-esteem { background: var(--success); width: 40%; }
+        .support-system { background: var(--warning); width: 30%; }
+        
+        .game-section {
+            width: 70%;
+            padding: 30px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .story-container {
+            background: rgba(26, 37, 47, 0.7);
+            border-radius: 10px;
+            padding: 25px;
+            flex: 1;
+            margin-bottom: 25px;
+            border: 1px solid rgba(52, 152, 219, 0.3);
+            box-shadow: inset 0 0 15px rgba(0, 0, 0, 0.3);
+            overflow-y: auto;
+            max-height: 400px;
+        }
+        
+        .story-text {
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            line-height: 1.7;
+        }
+        
+        .dialogue {
+            background: rgba(44, 62, 80, 0.9);
+            border-left: 4px solid var(--secondary);
+            padding: 15px;
+            margin: 15px 0;
+            font-style: italic;
+            border-radius: 0 8px 8px 0;
+        }
+        
+        .choices-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .choice-btn {
+            background: rgba(44, 62, 80, 0.9);
+            color: var(--light);
+            border: none;
+            border-radius: 8px;
+            padding: 15px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            border: 2px solid rgba(52, 152, 219, 0.3);
+        }
+        
+        .choice-btn:hover {
+            background: var(--secondary);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .choice-btn:active {
+            transform: translateY(0);
+        }
+        
+        .ending-screen {
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .ending-title {
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+            color: var(--secondary);
+        }
+        
+        .ending-text {
+            font-size: 1.3rem;
+            margin-bottom: 30px;
+            line-height: 1.8;
+        }
+        
+        .restart-btn {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            font-size: 1.2rem;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .restart-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .progress-container {
+            height: 8px;
+            background: var(--dark);
+            border-radius: 4px;
+            margin-top: 20px;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: var(--secondary);
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+        
+        .fact-box {
+            background: rgba(231, 76, 60, 0.1);
+            border: 1px solid var(--accent);
+            border-radius: 8px;
+            padding: 15px;
+            margin: 20px 0;
+            font-size: 0.9rem;
+        }
+        
+        .fact-title {
+            color: var(--accent);
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+        
+        @media (max-width: 768px) {
+            .content-area {
+                flex-direction: column;
+            }
+            
+            .character-section, .game-section {
+                width: 100%;
+            }
+            
+            .character-section {
+                border-right: none;
+                border-bottom: 2px solid var(--dark);
+            }
+            
+            .choices-container {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="game-container">
+        <div class="game-header">
+            <h1 class="game-title">Toxic Tide </h1>
+        </div>
+        
+        <div class="content-area">
+            <div class="character-section">
+                <div class="character-image"><img id="Scenario-select-bg" src="assets/character-han.png" alt="Han character img"></div>
+                <h2 class="character-name">Han</h2>
+                <p class="character-role">16-year-old high school student</p>
+                
+                <div class="stats-container">
+                    <h3>Current State</h3>
+                    <div class="stat-bar">
+                        <div class="stat-label">
+                            <span>Mental Health</span>
+                            <span>60%</span>
+                        </div>
+                        <div class="stat-meter">
+                            <div class="stat-fill mental-health"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-bar">
+                        <div class="stat-label">
+                            <span>Self-Esteem</span>
+                            <span>40%</span>
+                        </div>
+                        <div class="stat-meter">
+                            <div class="stat-fill self-esteem"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="stat-bar">
+                        <div class="stat-label">
+                            <span>Support System</span>
+                            <span>30%</span>
+                        </div>
+                        <div class="stat-meter">
+                            <div class="stat-fill support-system"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="fact-box">
+                    <div class="fact-title">Did You Know?</div>
+                    <p>1 in 9 men experience severe intimate partner violence. Male victims often face stigma and lack of support.</p>
+                </div>
+                
+                <div class="fact-box">
+                    <div class="fact-title">Manipulation Tactics</div>
+                    <p>Toxic partners may use gaslighting, isolation, threats, and emotional blackmail to maintain control.</p>
+                </div>
+            </div>
+            
+                    <div class="resources">
+            <h2><i class="fas fa-hands-helping"></i> Resources & Support</h2>
+            
+            <div class="resource-list">
+                <div class="resource-item">
+                    <div class="resource-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="resource-content">
+                        <h3>National Domestic Violence Hotline</h3>
+                        <p>Call 1-800-799-SAFE (7233) or text START to 88788</p>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-icon"><i class="fas fa-heart"></i></div>
+                    <div class="resource-content">
+                        <h3>Love is Respect</h3>
+                        <p>Call 1-866-331-9474 or text LOVEIS to 22522</p>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-icon"><i class="fas fa-globe"></i></div>
+                    <div class="resource-content">
+                        <h3>Help for Substance Abuse</h3>
+                        <p>Substance Abuse and Mental Health Services Administration: <a href="https://www.samhsa.gov/">samhsa.gov</a></p>
+                        <p>Confidential support: <a href="https://www.1800respect.org.au/">1800respect.org.au</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <footer>
+        <p>This interactive experience is designed to raise awareness about toxic relationship patterns. If you or someone you know is in an unhealthy relationship, please reach out to the resources listed above.</p>
+    </footer>
+
+
+    <script>
+        // Game state
+        const gameState = {
+            currentScene: "start",
+            mentalHealth: 60,
+            selfEsteem: 40,
+            supportSystem: 30,
+            progress: 0,
+            endings: []
+        };
+
+        // Update stats display
+        function updateStats() {
+            document.getElementById('selfEsteemStat').textContent = `${gameState.selfEsteem}%`;
+            document.getElementById('mentalStat').textContent = `${gameState.relationshipHealth}%`;
+            document.getElementById('supportStat').textContent = `${gameState.supportSystem}%`;
+            
+            document.getElementById('selfEsteemFill').style.width = `${gameState.selfEsteem}%`;
+            document.getElementById('mentalFill').style.width = `${gameState.relationshipHealth}%`;
+            document.getElementById('supportFill').style.width = `${gameState.supportSystem}%`;
+            
+            document.getElementById('progressBar').style.width = `${gameState.progress}%`;
+        }
+
+        
+
+        // Story scenes
+        const scenes = {
+            start: {
+                text: `<p>You're Han, a 16-year-old high school student. You've been dating Skyler for six months. At first, everything was amazing - Skyler was charming, attentive, and made you feel special. But lately, things have changed...</p>
+                <p>Skyler has started making comments about your friends: "Why do you hang out with them? They're such losers." And when you spend time with your family, Skyler says: "Your parents don't understand you like I do."</p>
+                <p>Yesterday, when you mentioned going to your best friend Sam's birthday party, Skyler got upset: "If you really loved me, you'd spend Saturday with me instead. Don't you care about our relationship?"</p>
+                <div class="dialogue">"I just want what's best for you, Han. Those other people are holding you back."</div>`,
+                choices: [
+                    { text: "Skip the party to make Skyler happy", next: "skipParty" },
+                    { text: "Tell Skyler you're going to the party anyway", next: "attendParty" }
+                ]
+            },
+            
+            skipParty: {
+                text: `<p>You decide to skip Sam's birthday party to avoid upsetting Skyler. Skyler seems happy with your decision, but you feel guilty about letting Sam down.</p>
+                <p>The next day at school, Sam confronts you: "What happened yesterday? We missed you!" You make an excuse about not feeling well, but Sam seems skeptical.</p>
+                <p>Over the next few weeks, Skyler continues to isolate you from your friends. You've missed several hangouts, and your friends have stopped inviting you to things.</p>
+                <div class="dialogue">"See? I told you they weren't real friends. You're better off without them."</div>`,
+                choices: [
+                    { text: "Agree with Skyler - maybe they weren't good friends", next: "loseFriends" },
+                    { text: "Tell Skyler you miss your friends", next: "confrontIsolation" }
+                ]
+            },
+            
+            attendParty: {
+                text: `<p>You decide to attend Sam's birthday party despite Skyler's objections. You have a great time reconnecting with friends, but when you check your phone, you have 15 missed calls and 20 texts from Skyler.</p>
+                <p>The texts escalate from "Where are you?" to "If you cared about me you'd answer" to "We're done!"</p>
+                <p>When you get home, Skyler calls: "How could you do this to me? After everything I've done for you? I was worried sick!"</p>
+                <div class="dialogue">"You made me look like a fool! I thought we had something special."</div>`,
+                choices: [
+                    { text: "Apologize and promise not to do it again", next: "apologizeParty" },
+                    { text: "Explain you have a right to see friends", next: "standGround" }
+                ]
+            },
+            
+            loseFriends: {
+                text: `<p>You've completely lost touch with your former friends. Skyler is now your entire social world. At first, it felt comforting to have someone so devoted to you, but now you feel trapped.</p>
+                <p>Skyler has started criticizing you more: "Why do you dress like that? You look ridiculous." and "Your taste in music is so immature."</p>
+                <p>When you get a B+ on a math test you studied hard for, Skyler mocks you: "Is that the best you can do? I thought you were smarter than that."</p>
+                <div class="dialogue">"I'm only saying this because I care about you. You should be aiming higher."</div>`,
+                choices: [
+                    { text: "Accept Skyler's criticism as constructive", next: "acceptCriticism" },
+                    { text: "Tell Skyler the comments hurt your feelings", next: "expressHurt" }
+                ]
+            },
+            
+            confrontIsolation: {
+                text: `<p>You tell Skyler you miss your friends and want to reconnect. Skyler's expression darkens: "After everything I've done for you? I've given you all my time and attention, and it's still not enough?"</p>
+                <p>Skyler starts crying: "I thought you loved me. If you really cared, you wouldn't want anyone else." You feel guilty for making Skyler cry.</p>
+                <p>Later that week, you mention possibly joining the school soccer team. Skyler reacts negatively: "Sports are such a waste of time. You should focus on our relationship instead."</p>
+                <div class="dialogue">"Besides, you're not really athletic enough to make the team anyway."</div>`,
+                choices: [
+                    { text: "Drop the idea of joining the team", next: "dropSoccer" },
+                    { text: "Try out for the team anyway", next: "trySoccer" }
+                ]
+            },
+            
+            apologizeParty: {
+                text: `<p>You apologize profusely to Skyler and promise not to prioritize friends over the relationship again. Skyler accepts your apology but says: "You'll need to earn back my trust."</p>
+                <p>Over the next month, Skyler demands to know where you are at all times. You're required to share your location and respond to texts within 5 minutes.</p>
+                <p>When you're 10 minutes late responding once because your phone died, Skyler shows up at your house unannounced: "I thought something terrible happened! You can't do this to me!"</p>
+                <div class="dialogue">"If you really loved me, you'd make sure I never have to worry like that."</div>`,
+                choices: [
+                    { text: "Agree to be more careful with your phone", next: "moreControl" },
+                    { text: "Say this level of monitoring is unreasonable", next: "pushBack" }
+                ]
+            },
+            
+            standGround: {
+                text: `<p>You tell Skyler you have a right to maintain friendships outside your relationship. Skyler gets angry: "So that's how it is? After everything I've done for you?"</p>
+                <p>The next day at school, Skyler spreads rumors that you've been flirting with others. Some classmates give you strange looks. Skyler then acts hurt when you confront about the rumors: "I was just venting to friends because I was upset. You made me feel insecure!"</p>
+                <p>Later that week, Skyler "accidentally" bumps into you in the hallway, hard enough to knock your books out of your hands. When you react with surprise, Skyler says: "Oh relax, it was an accident. You're so sensitive."</p>
+                <div class="dialogue">"Why are you making such a big deal? It's not like I hit you or something."</div>`,
+                choices: [
+                    { text: "Brush it off as an accident", next: "brushOff" },
+                    { text: "Tell someone about Skyler's behavior", next: "tellSomeone" }
+                ]
+            },
+            
+            // Additional scenes leading to different endings
+            acceptCriticism: {
+                text: `<p>You accept Skyler's constant criticism as "constructive advice." Your self-esteem continues to erode. You find yourself changing your appearance, interests, and even academic choices to please Skyler.</p>
+                <p>One day, you mention a college you're interested in. Skyler reacts negatively: "That's too far away. If you really loved me, you'd go to the local community college so we can stay together."</p>
+                <p>When you hesitate, Skyler threatens: "If you leave, I'll find someone who actually appreciates me. You'll regret it."</p>`,
+                choices: [
+                    { text: "Give up on your dream college", next: "endingTrapped" },
+                    { text: "Refuse to change your college plans", next: "endingBreakup" }
+                ]
+            },
+            
+            expressHurt: {
+                text: `<p>You tell Skyler that the constant criticism hurts your feelings. Skyler looks shocked: "I can't believe you'd accuse me of that! I'm only trying to help you improve."</p>
+                <p>Skyler then turns the tables: "After everything I've put up with from you? Your forgetfulness, your awkwardness... I'm the only one who sees your potential."</p>
+                <p>You start to doubt yourself. Maybe Skyler is right? Maybe you're too sensitive? Maybe you should be grateful someone sees potential in you?</p>`,
+                choices: [
+                    { text: "Apologize for being too sensitive", next: "endingDependent" },
+                    { text: "Seek advice from a school counselor", next: "endingSupport" }
+                ]
+            },
+            
+            pushBack: {
+                text: `<p>You tell Skyler that constant monitoring is unreasonable and that you need some independence. Skyler becomes furious: "After all I've done for you? This is how you repay me?"</p>
+                <p>Skyler threatens to share private information about you: "Maybe everyone should know about your anxiety issues. Or those embarrassing photos you sent me."</p>
+                <p>You feel trapped. Skyler has access to sensitive information and seems willing to use it against you.</p>`,
+                choices: [
+                    { text: "Give in to Skyler's demands", next: "endingBlackmailed" },
+                    { text: "Talk to your parents about the situation", next: "endingParentHelp" }
+                ]
+            },
+            
+            tellSomeone: {
+                text: `<p>You confide in your friend Sam about Skyler's behavior - the rumors, the physical bump, and the controlling behavior. Sam looks concerned: "That doesn't sound healthy at all. Have you talked to your parents?"</p>
+                <p>Sam offers to go with you to talk to the school counselor. "You shouldn't have to deal with this alone. This is abuse, Han."</p>
+                <p>The word "abuse" shocks you. You never thought of it that way. Boys aren't supposed to be victims, right?</p>`,
+                choices: [
+                    { text: "Downplay it - 'it's not that bad'", next: "endingMinimize" },
+                    { text: "Accept Sam's help to see the counselor", next: "endingSupport" }
+                ]
+            },
+            
+            // Endings
+            endingTrapped: {
+                text: `<h2 class="ending-title">Ending: Trapped</h2>
+                <p class="ending-text">You give up your dream college to stay with Skyler. Over time, Skyler's control intensifies. You've lost contact with friends and family, and your self-esteem is at an all-time low. Skyler controls what you wear, who you talk to, and where you go. You feel completely isolated but afraid to leave, believing no one else would want you. The relationship continues in a cycle of criticism, control, and brief moments of affection that keep you hoping things will improve.</p>
+                <p><strong>Remember:</strong> Healthy relationships respect individual dreams and independence. You deserve to pursue your goals without manipulation or threats.</p>`,
+                choices: [
+                    { text: "Play Again", next: "restart" }
+                ]
+            },
+            
+            endingBreakup: {
+                text: `<h2 class="ending-title">Ending: Painful Breakup</h2>
+                <p class="ending-text">You stand firm on attending your dream college. Skyler reacts with rage, spreading vicious rumors about you and turning mutual friends against you. The breakup is messy and public. While initially painful, being away at college gives you perspective. You start rebuilding your self-esteem and make new friends. With time and distance, you recognize how toxic the relationship was. You eventually start dating again, now better at recognizing red flags.</p>
+                <p><strong>Remember:</strong> Ending a toxic relationship is painful but often necessary for your wellbeing. Support networks are crucial during recovery.</p>`,
+                choices: [
+                    { text: "Play Again", next: "restart" }
+                ]
+            },
+            
+            endingDependent: {
+                text: `<h2 class="ending-title">Ending: Emotional Dependence</h2>
+                <p class="ending-text">You apologize and become increasingly dependent on Skyler for validation. You second-guess all your decisions and lose confidence in your own judgment. Skyler's control extends to your hobbies, clothing choices, and even family interactions. When Skyler cheats on you, you blame yourself: "If I were better, this wouldn't have happened." You stay in the relationship, constantly trying to earn Skyler's approval, never feeling good enough.</p>
+                <p><strong>Remember:</strong> Your worth isn't defined by someone else's approval. Healthy relationships build you up, not tear you down.</p>`,
+                choices: [
+                    { text: "Play Again", next: "restart" }
+                ]
+            },
+            
+            endingBlackmailed: {
+                text: `<h2 class="ending-title">Ending: Under Threat</h2>
+                <p class="ending-text">Fearing exposure, you submit to Skyler's demands. Skyler uses your private information and insecurities to maintain control. You live in constant anxiety, performing to Skyler's expectations while feeling increasingly worthless. When Skyler eventually shares your private photos anyway as "punishment" for a minor transgression, you feel devastated but powerless to respond. The experience leaves deep emotional scars.</p>
+                <p><strong>Remember:</strong> Threats and blackmail are never acceptable in relationships. Sharing intimate images without consent is illegal in many places.</p>`,
+                choices: [
+                    { text: "Play Again", next: "restart" }
+                ]
+            },
+            
+            endingMinimize: {
+                text: `<h2 class="ending-title">Ending: Silent Struggle</h2>
+                <p class="ending-text">You convince yourself it's "not that bad" and stay in the relationship. Skyler's behavior escalates slowly - more controlling behavior, more put-downs disguised as "concern," occasional physical intimidation. You tell yourself you can handle it, that you're strong enough to take it. But the constant stress affects your grades, sleep, and mental health. Years later, you recognize the relationship as abusive, but the patterns have affected your ability to form healthy relationships.</p>
+                <p><strong>Remember:</strong> Abuse often escalates gradually. Minimizing concerning behavior allows it to continue. Trust your instincts when something feels wrong.</p>`,
+                choices: [
+                    { text: "Play Again", next: "restart" }
+                ]
+            },
+            
+            endingSupport: {
+                text: `<h2 class="ending-title">Ending: Path to Healing</h2>
+                <p class="ending-text">With Sam's support, you speak with the school counselor who helps you recognize the relationship as emotionally abusive. They help you develop a safety plan and connect with resources. You end the relationship with Skyler, who initially tries to win you back with promises and gifts, then escalates to threats. With continued counseling and support from family and friends, you rebuild your self-esteem. While the experience leaves scars, you learn to recognize healthy relationships and set firm boundaries.</p>
+                <p><strong>Remember:</strong> Seeking help is a sign of strength. Support systems are crucial when leaving abusive relationships, regardless of gender.</p>`,
+                choices: [
+                    { text: "Play Again", next: "restart" }
+                ]
+            },
+            
+            endingParentHelp: {
+                text: `<h2 class="ending-title">Ending: Family Support</h2>
+                <p class="ending-text">You confide in your parents about Skyler's behavior and threats. They take it seriously, contacting the school and Skyler's parents. With adult intervention, Skyler backs down and stops contacting you. Your parents help you get counseling to process the experience. Though initially embarrassed to admit you were victimized, you come to understand that abuse can happen to anyone. You become an advocate against relationship violence, sharing your story to help others.</p>
+                <p><strong>Remember:</strong> Speaking to trusted adults can provide protection and resources. Abuse is never the victim's fault, regardless of gender.</p>`,
+                choices: [
+                    { text: "Play Again", next: "restart" }
+                ]
+            },
+            
+            restart: {
+                text: `<h2 class="ending-title">Begin Again</h2>
+                <p class="ending-text">Every relationship is different, and everyone deserves to be treated with respect. As you play through Han's story again, consider different choices and their consequences. What does a healthy relationship look like to you?</p>`,
+                choices: [
+                    { text: "Start Han's Story Again", next: "start" }
+                ]
+            }
+        };
+
+        // Initialize game
+        function initGame() {
+            updateStats();
+        }
+
+        function renderScene(sceneId) {
+            const scene = scenes[sceneId];
+            const gameArea = document.getElementById('gameArea');
+            gameState.currentScene = sceneId;
+            gameState.progress = sceneId === 'start' ? 0 : Math.min(gameState.progress + 15, 100);
+            
+            if (scene.ending) {
+                if (!gameState.endings.includes(sceneId)) {
+                    gameState.endings.push(sceneId);
+                }
+                
+                gameArea.innerHTML = `
+                    <div class="ending-screen">
+                        <div class="ending-icon"><i class="${scene.icon}"></i></div>
+                        <h2 class="ending-title">${scene.title}</h2>
+                        <div class="ending-description">${scene.text}</div>
+                        <button class="restart-btn" onclick="restartGame()"><i class="fas fa-redo"></i> Play Again</button>
+                    </div>
+                `;
+            } else {
+                let choicesHTML = '';
+                scene.choices.forEach(choice => {
+                    choicesHTML += `
+                        <button class="choice-btn" data-next="${choice.next}">
+                            <i class="${choice.icon}"></i> ${choice.text}
+                        </button>
+                    `;
+                });
+                
+                gameArea.innerHTML = `
+                    <div class="scene fade-in">
+                        <div class="scene-text">${scene.text}</div>
+                        <div class="choices">${choicesHTML}</div>
+                    </div>
+                `;
+                
+                // Add event listeners to new choice buttons
+                document.querySelectorAll('.choice-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const nextScene = this.getAttribute('data-next');
+                        const choiceEffect = scene.choices.find(c => c.next === nextScene)?.effect;
+                        
+                        if (choiceEffect) {
+                            gameState.selfEsteem = Math.max(0, Math.min(100, gameState.selfEsteem + choiceEffect.selfEsteem));
+                            gameState.relationshipHealth = Math.max(0, Math.min(100, gameState.relationshipHealth + choiceEffect.relationshipHealth));
+                            gameState.supportSystem = Math.max(0, Math.min(100, gameState.supportSystem + choiceEffect.supportSystem));
+                            updateStats();
+                        }
+                        
+                        renderScene(nextScene);
+                    });
+                });
+            }
+            
+            updateStats();
+        }
+
+        // Update stats display
+        function updateStatsDisplay() {
+            document.querySelector(".mental-health").style.width = gameState.mentalHealth + "%";
+            document.querySelector(".self-esteem").style.width = gameState.selfEsteem + "%";
+            document.querySelector(".support-system").style.width = gameState.supportSystem + "%";
+            
+            document.querySelector(".stat-label:nth-child(1) span:last-child").textContent = gameState.mentalHealth + "%";
+            document.querySelector(".stat-label:nth-child(2) span:last-child").textContent = gameState.selfEsteem + "%";
+            document.querySelector(".stat-label:nth-child(3) span:last-child").textContent = gameState.supportSystem + "%";
+        }
+
+        // Restart game
+        function restartGame() {
+            gameState.selfEsteem = 50;
+            gameState.mentalHealth = 40;
+            gameState.supportSystem = 60;
+            gameState.progress = 0;
+            renderScene('start');
+
+        }
+
+        // Initialize the game when page loads
+        window.onload = function() {
+            initGame();
+            renderScene('start');
+        }
+    </script>
+</body>
+</html>

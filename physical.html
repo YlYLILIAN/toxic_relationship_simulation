@@ -1,0 +1,1090 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shadows of Affection: Toxic Relationship Awareness</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #e6e6e6;
+            min-height: 100vh;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        .container {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(25, 25, 45, 0.9);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            padding: 30px;
+            margin-top: 20px;
+            position: relative;
+            overflow: hidden;
+            border: 1px solid #4a4a6a;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #4a4a6a;
+        }
+        
+        h1 {
+            font-size: 2.8rem;
+            margin-bottom: 15px;
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 2px 10px rgba(255, 107, 107, 0.3);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            color: #a0a0c0;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+        
+        .game-area {
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .scene {
+            background: rgba(35, 35, 55, 0.6);
+            border-radius: 10px;
+            padding: 25px;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.1rem;
+            border-left: 4px solid #ff6b6b;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+        
+        .scene::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+        }
+        
+        .scene-text {
+            margin-bottom: 20px;
+        }
+        
+        .character {
+            font-weight: bold;
+            color: #ff8e8e;
+        }
+        
+        .player {
+            color: #6bffb8;
+        }
+        
+        .choices {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .choice-btn {
+            background: rgba(65, 65, 95, 0.7);
+            border: none;
+            border-radius: 8px;
+            padding: 16px;
+            color: #e6e6e6;
+            font-size: 1rem;
+            cursor: pointer;
+            text-align: left;
+            transition: all 0.3s ease;
+            border-left: 3px solid #4a4a6a;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .choice-btn:hover {
+            background: rgba(85, 85, 115, 0.9);
+            transform: translateY(-2px);
+            border-left: 3px solid #ff6b6b;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.2);
+        }
+        
+        .choice-btn:active {
+            transform: translateY(1px);
+        }
+        
+        .choice-btn i {
+            margin-right: 10px;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding: 15px;
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            font-size: 1rem;
+            border: 1px solid #4a4a6a;
+        }
+        
+        .stat-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            flex: 1;
+        }
+        
+        .stat-value {
+            font-size: 1.4rem;
+            font-weight: bold;
+            margin-top: 5px;
+            color: #ff8e8e;
+        }
+        
+        .stat-meter {
+            width: 100%;
+            height: 8px;
+            background: rgba(60, 60, 80, 0.5);
+            border-radius: 4px;
+            margin-top: 5px;
+            overflow: hidden;
+        }
+        
+        .stat-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            border-radius: 4px;
+        }
+        
+        .ending-screen {
+            text-align: center;
+            padding: 30px;
+            animation: fadeIn 1s ease;
+        }
+        
+        .ending-title {
+            font-size: 2.2rem;
+            color: #ff8e8e;
+            margin-bottom: 25px;
+            text-shadow: 0 0 15px rgba(255, 142, 142, 0.5);
+        }
+        
+        .ending-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            color: #ff6b6b;
+        }
+        
+        .ending-description {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            margin-bottom: 30px;
+            background: rgba(40, 40, 60, 0.6);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+            text-align: left;
+        }
+        
+        .ending-tag {
+            display: inline-block;
+            background: rgba(255, 107, 107, 0.2);
+            padding: 5px 15px;
+            border-radius: 20px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border: 1px solid #ff6b6b;
+        }
+        
+        .restart-btn {
+            background: linear-gradient(45deg, #ff6b6b, #ff8e8e);
+            border: none;
+            border-radius: 8px;
+            padding: 15px 40px;
+            color: white;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.4);
+            margin-top: 20px;
+        }
+        
+        .restart-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.6);
+        }
+        
+        .resources {
+            margin-top: 40px;
+            padding: 25px;
+            background: rgba(30, 30, 50, 0.7);
+            border-radius: 10px;
+            border-top: 3px solid #ff6b6b;
+        }
+        
+        .resources h2 {
+            color: #ff8e8e;
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        
+        .resource-list {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+        
+        .resource-item {
+            background: rgba(40, 40, 60, 0.6);
+            padding: 15px;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: flex-start;
+        }
+        
+        .resource-item:hover {
+            background: rgba(50, 50, 70, 0.8);
+            transform: translateX(5px);
+        }
+        
+        .resource-icon {
+            font-size: 1.5rem;
+            color: #ff8e8e;
+            margin-right: 15px;
+            min-width: 30px;
+        }
+        
+        .resource-content h3 {
+            color: #ff8e8e;
+            margin-bottom: 5px;
+        }
+        
+        .resource-content p {
+            font-size: 0.95rem;
+            color: #c0c0e0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            color: #a0a0c0;
+            font-size: 0.9rem;
+            padding: 20px;
+            border-top: 1px solid #4a4a6a;
+            width: 100%;
+            max-width: 800px;
+        }
+        
+        .heart {
+            position: absolute;
+            background: rgba(255, 107, 107, 0.1);
+            display: block;
+            pointer-events: none;
+            z-index: -1;
+            animation: float 15s ease-in-out infinite;
+        }
+        
+        .heart::before,
+        .heart::after {
+            content: "";
+            background: rgba(255, 107, 107, 0.15);
+            border-radius: 50%;
+            position: absolute;
+        }
+        
+        .heart::before {
+            width: 100%;
+            height: 100%;
+            top: -50%;
+            left: 0;
+        }
+        
+        .heart::after {
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: -50%;
+        }
+        
+        .hidden {
+            display: none;
+        }
+        
+        .progress-container {
+            width: 100%;
+            height: 8px;
+            background: rgba(60, 60, 80, 0.5);
+            border-radius: 4px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #ff6b6b, #ff8e8e);
+            border-radius: 4px;
+            width: 0%;
+            transition: width 0.5s ease;
+        }
+
+        a:link {
+            color: rgb(255, 87, 233);
+            background-color: transparent;
+            text-decoration: none;
+            }
+
+            a:visited {
+            color: pink;
+            background-color: transparent;
+            text-decoration: none;
+            }
+
+            a:hover {
+            color: rgb(252, 106, 192);
+            background-color: transparent;
+            text-decoration: underline;
+            }
+
+            a:active {
+            color: rgb(235, 135, 255);
+            background-color: transparent;
+            text-decoration: underline;
+            }
+        
+        @keyframes float {
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
+            50% { transform: translate(20px, -20px) rotate(10deg); opacity: 0.4; }
+            100% { transform: translate(0, 0) rotate(0deg); opacity: 0.7; }
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease forwards;
+        }
+        
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            .scene {
+                padding: 20px;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .stat-item {
+                align-items: flex-start;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Shadows of Affection</h1>
+            <p class="subtitle">An interactive experience about recognizing toxic relationship patterns. Your choices will shape the story and determine your path forward.</p>
+        </header>
+        
+        <div class="progress-container">
+            <div class="progress-bar" id="progressBar"></div>
+        </div>
+        
+        <div class="game-area" id="gameArea">
+            <div class="scene fade-in">
+                <div class="scene-text" id="sceneText">
+                    <p>You've been dating Derek for eight months. At first, he was charming and attentive, but things changed when he started using substances. Last night was terrifying - he got high and pushed you against the wall, leaving bruises on your arm. This morning, he brought flowers and breakfast, crying as he apologized.</p>
+                    <p>Your best friend Chloe texts you: "Saw Derek at the coffee shop this morning. He seemed off. Everything okay?"</p>
+                    <p>You're not sure how to respond. Derek walks into the room with coffee and a tender smile, but you can't shake the memory of last night.</p>
+                </div>
+                
+                <div class="choices" id="choices">
+                    <button class="choice-btn" data-next="cover"><i class="fas fa-mask"></i> "Everything's fine!" (Hide the truth from Chloe)</button>
+                    <button class="choice-btn" data-next="confide"><i class="fas fa-user-friends"></i> "Not really... can we talk?" (Tell Chloe what happened)</button>
+                    <button class="choice-btn" data-next="confront"><i class="fas fa-exclamation-triangle"></i> "Derek, we need to talk about last night" (Confront him now)</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="stats">
+            <div class="stat-item">
+                <span>Safety</span>
+                <div class="stat-value" id="safetyStat">40%</div>
+                <div class="stat-meter"><div class="stat-fill" id="safetyFill" style="width: 40%"></div></div>
+            </div>
+            <div class="stat-item">
+                <span>Clarity</span>
+                <div class="stat-value" id="clarityStat">50%</div>
+                <div class="stat-meter"><div class="stat-fill" id="clarityFill" style="width: 50%"></div></div>
+            </div>
+            <div class="stat-item">
+                <span>Support System</span>
+                <div class="stat-value" id="supportStat">60%</div>
+                <div class="stat-meter"><div class="stat-fill" id="supportFill" style="width: 60%"></div></div>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h2><i class="fas fa-hands-helping"></i> Resources & Support</h2>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <div class="resource-icon"><i class="fas fa-phone-alt"></i></div>
+                    <div class="resource-content">
+                        <h3>National Domestic Violence Hotline</h3>
+                        <p>Call 1-800-799-SAFE (7233) or text START to 88788</p>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-icon"><i class="fas fa-heart"></i></div>
+                    <div class="resource-content">
+                        <h3>Love is Respect</h3>
+                        <p>Call 1-866-331-9474 or text LOVEIS to 22522</p>
+                    </div>
+                </div>
+                <div class="resource-item">
+                    <div class="resource-icon"><i class="fas fa-globe"></i></div>
+                    <div class="resource-content">
+                        <h3>Help for Substance Abuse</h3>
+                        <p>Substance Abuse and Mental Health Services Administration: <a href="https://www.samhsa.gov/">samhsa.gov</a></p>
+                        <p>Confidential support: <a href="https://www.1800respect.org.au/">1800respect.org.au</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <footer>
+        <p>This interactive experience is designed to raise awareness about toxic relationship patterns. If you or someone you know is in an unhealthy relationship, please reach out to the resources listed above.</p>
+    </footer>
+
+    <script>
+        // Game state
+        const gameState = {
+            currentScene: 'start',
+            safety: 40,
+            clarity: 50,
+            supportSystem: 60,
+            progress: 0,
+            endings: [],
+            hasBeenPhysical: false,
+            documentedEvidence: false
+        };
+        
+        // Update stats display
+        function updateStats() {
+            document.getElementById('safetyStat').textContent = `${gameState.safety}%`;
+            document.getElementById('clarityStat').textContent = `${gameState.clarity}%`;
+            document.getElementById('supportStat').textContent = `${gameState.supportSystem}%`;
+            
+            document.getElementById('safetyFill').style.width = `${gameState.safety}%`;
+            document.getElementById('clarityFill').style.width = `${gameState.clarity}%`;
+            document.getElementById('supportFill').style.width = `${gameState.supportSystem}%`;
+            
+            document.getElementById('progressBar').style.width = `${gameState.progress}%`;
+        }
+        
+        // Scene definitions - New narrative focusing on physical abuse cycle
+        const scenes = {
+            start: {
+                text: `<p>You've been dating Derek for eight months. At first, he was charming and attentive, but things changed when he started using substances. Last night was terrifying - he got high and pushed you against the wall, leaving bruises on your arm. This morning, he brought flowers and breakfast, crying as he apologized.</p>
+                       <p>Your best friend Chloe texts you: "Saw Derek at the coffee shop this morning. He seemed off. Everything okay?"</p>
+                       <p>You're not sure how to respond. Derek walks into the room with coffee and a tender smile, but you can't shake the memory of last night.</p>`,
+                choices: [
+                    { text: '"Everything\'s fine!" (Hide the truth from Chloe)', next: 'cover', effect: { safety: -5, clarity: -10, supportSystem: -15 }, icon: "fas fa-mask" },
+                    { text: '"Not really... can we talk?" (Tell Chloe what happened)', next: 'confide', effect: { safety: 0, clarity: 5, supportSystem: 10 }, icon: "fas fa-user-friends" },
+                    { text: '"Derek, we need to talk about last night" (Confront him now)', next: 'confront', effect: { safety: -10, clarity: 10, supportSystem: 0 }, icon: "fas fa-exclamation-triangle" }
+                ]
+            },
+            'cover': {
+                text: `<p>You tell Chloe everything is fine. Derek notices your tension and asks what's wrong. When you hesitate, his smile fades. "You're not still upset about last night, are you? I said I was sorry," he says, his voice tightening.</p>
+                       <p>He moves closer, his expression shifting from concern to irritation. "I had a rough day yesterday, but I made it up to you this morning. Why can't you just let it go?"</p>`,
+                choices: [
+                    { text: 'Apologize and change the subject', next: 'apologize', effect: { safety: -10, clarity: -5, supportSystem: -5 }, icon: "fas fa-dove" },
+                    { text: 'Stand your ground: "It wasn\'t okay"', next: 'stand-ground', effect: { safety: -15, clarity: 5, supportSystem: 0 }, icon: "fas fa-shield-alt" },
+                    { text: 'Make an excuse to leave the room', next: 'leave-room', effect: { safety: 5, clarity: 0, supportSystem: 0 }, icon: "fas fa-walking" }
+                ]
+            },
+            'confide': {
+                text: `<p>You confide in Chloe about what happened. She listens without judgment: "That's not okay. He needs help, and you need to be safe. I can come over if you want."</p>
+                       <p>Just then, Derek walks in holding tickets. "Surprise! I got us tickets to that concert you wanted. I know I messed up, but I'll make it up to you." He beams with excitement.</p>`,
+                choices: [
+                    { text: 'Accept the tickets and go to the concert', next: 'accept-tickets', effect: { safety: -5, clarity: -10, supportSystem: -5 }, icon: "fas fa-music" },
+                    { text: 'Decline: "We need to talk about your substance use"', next: 'address-substance', effect: { safety: -10, clarity: 10, supportSystem: 5 }, icon: "fas fa-comment-medical" },
+                    { text: 'Ask Chloe to come over now', next: 'chloe-over', effect: { safety: 10, clarity: 5, supportSystem: 15 }, icon: "fas fa-user-friends" }
+                ]
+            },
+            'confront': {
+                text: `<p>You confront Derek about last night. His face darkens. "I apologized, didn't I? What more do you want?" He paces the room, growing agitated. "You always make me feel like a monster!"</p>
+                       <p>He slams his fist on the table, making you flinch. Then he stops, takes a deep breath, and his expression softens. "I'm sorry... I didn't mean to scare you. It's just... I love you so much, and I hate that I hurt you." Tears well in his eyes.</p>`,
+                choices: [
+                    { text: 'Comfort him: "I know you didn\'t mean it"', next: 'comfort', effect: { safety: -10, clarity: -10, supportSystem: -5 }, icon: "fas fa-hands-helping" },
+                    { text: 'Insist he gets professional help', next: 'demand-help', effect: { safety: -15, clarity: 10, supportSystem: 0 }, icon: "fas fa-stethoscope" },
+                    { text: 'Pack a bag to stay with Chloe', next: 'pack-bag', effect: { safety: 15, clarity: 10, supportSystem: 10 }, icon: "fas fa-suitcase" }
+                ]
+            },
+
+            // Cover path
+            'apologize': {
+                text: `<p>You apologize and change the subject. Derek's mood improves instantly. That evening, he suggests going to a bar with friends. You hesitate, remembering how he gets when he drinks.</p>
+                       <p>"Come on, it'll be fun! I promise I'll behave," he says, wrapping his arm around you. "Don't you trust me?"</p>`,
+                choices: [
+                    { text: 'Go to the bar but watch his drinking', next: 'bar-watch', effect: { safety: -15, clarity: -5, supportSystem: -5 }, icon: "fas fa-glass-cheers" },
+                    { text: 'Suggest a movie night at home instead', next: 'movie-night', effect: { safety: 5, clarity: 0, supportSystem: 0 }, icon: "fas fa-film" },
+                    { text: 'Say you have a headache and stay home', next: 'headache', effect: { safety: 10, clarity: 5, supportSystem: 0 }, icon: "fas fa-bed" }
+                ]
+            },
+            'stand-ground': {
+                text: `<p>You stand your ground: "Pushing me wasn't okay, even if you apologized." Derek's expression hardens. "So that's it? One mistake and I'm the villain?" He steps closer, his voice rising. "After everything I do for you?"</p>
+                       <p>He grabs your arm exactly where the bruise is, making you gasp in pain. "See? You're making me do this!" Then he releases you, looking horrified. "Oh god, I'm so sorry... I didn't mean..."</p>`,
+                choices: [
+                    { text: 'Accept his apology again', next: 'accept-apology', effect: { safety: -20, clarity: -15, supportSystem: -10 }, icon: "fas fa-hand-holding-heart" },
+                    { text: 'Take photos of the new bruise', next: 'document', effect: { safety: -5, clarity: 15, supportSystem: 5 }, icon: "fas fa-camera" },
+                    { text: 'Call Chloe to come get you immediately', next: 'call-chloe', effect: { safety: 15, clarity: 10, supportSystem: 15 }, icon: "fas fa-phone" }
+                ]
+            },
+            'leave-room': {
+                text: `<p>You make an excuse to leave the room. In the bathroom, you examine the bruise on your arm. It's darker than you realized. You hear Derek calling from the other room: "Babe? Where'd you go?"</p>
+                       <p>His voice sounds tense. You quickly pull your sleeve down to cover the bruise.</p>`,
+                choices: [
+                    { text: 'Return and pretend everything is normal', next: 'return-normal', effect: { safety: -10, clarity: -5, supportSystem: -5 }, icon: "fas fa-smile" },
+                    { text: 'Text Chloe the truth and ask for help', next: 'text-help', effect: { safety: 10, clarity: 10, supportSystem: 15 }, icon: "fas fa-comment-dots" },
+                    { text: 'Confront Derek about the bruise', next: 'show-bruise', effect: { safety: -15, clarity: 5, supportSystem: 0 }, icon: "fas fa-exclamation" }
+                ]
+            },
+
+            // Confide path
+            'accept-tickets': {
+                text: `<p>You accept the concert tickets. At the show, Derek drinks heavily. During the encore, he accuses you of flirting with someone in the crowd. "I saw you smiling at him!" he slurs, grabbing your arm painfully.</p>
+                       <p>Backstage passes were part of the surprise. "I know the bassist," Derek brags to everyone. But when the musician greets you warmly, Derek's jealousy flares.</p>`,
+                choices: [
+                    { text: 'Defuse the situation and leave early', next: 'leave-early', effect: { safety: 5, clarity: 5, supportSystem: 0 }, icon: "fas fa-car" },
+                    { text: 'Confront him about his jealousy', next: 'jealousy', effect: { safety: -20, clarity: 5, supportSystem: 0 }, icon: "fas fa-fire" },
+                    { text: 'Text Chloe your location and situation', next: 'text-location', effect: { safety: 15, clarity: 10, supportSystem: 10 }, icon: "fas fa-map-marker-alt" }
+                ]
+            },
+            'address-substance': {
+                text: `<p>You address his substance use: "The drinking and drugs make you someone I don't recognize. I can't keep doing this." Derek looks stunned, then angry. "So now my coping mechanisms are a problem? After the stress I'm under?"</p>
+                       <p>He storms out, slamming the door. An hour later, he returns sober and remorseful. "You're right. I need help. I'll call a counselor tomorrow. Please give me one more chance?"</p>`,
+                choices: [
+                    { text: 'Agree to give him one more chance', next: 'one-more-chance', effect: { safety: -5, clarity: 0, supportSystem: -5 }, icon: "fas fa-redo" },
+                    { text: 'Offer to help him find resources now', next: 'find-help', effect: { safety: 5, clarity: 10, supportSystem: 5 }, icon: "fas fa-hands-helping" },
+                    { text: 'Say you need space to think', next: 'space-to-think', effect: { safety: 10, clarity: 15, supportSystem: 5 }, icon: "fas fa-hourglass-half" }
+                ]
+            },
+            'chloe-over': {
+                text: `<p>Chloe comes over immediately. When Derek sees her, his expression darkens. "What's she doing here?" he asks coldly. Chloe steps forward: "I'm here to support my friend. We need to talk about what happened."</p>
+                       <p>Derek's face twists with anger. "This is between me and my girlfriend!" He turns to you: "You told her? After I apologized and got you tickets?"</p>`,
+                choices: [
+                    { text: 'Ask Chloe to leave to calm Derek down', next: 'ask-chloe-leave', effect: { safety: -15, clarity: -10, supportSystem: -20 }, icon: "fas fa-door-open" },
+                    { text: 'Stand with Chloe: "I needed support"', next: 'stand-with-chloe', effect: { safety: 5, clarity: 15, supportSystem: 15 }, icon: "fas fa-users" },
+                    { text: 'Suggest all three of you talk together', next: 'group-talk', effect: { safety: -5, clarity: 10, supportSystem: 10 }, icon: "fas fa-comments" }
+                ]
+            },
+
+            // Confront path
+            'comfort': {
+                text: `<p>You comfort Derek. He holds you tightly. "I don't deserve you," he whispers. That night, he's exceptionally attentive. But when you mention seeing your family next weekend, his mood shifts.</p>
+                       <p>"Your brother never liked me," he mutters. "Why do you need to see them? We should go away together instead." He produces two pills. "This will help us relax."</p>`,
+                choices: [
+                    { text: 'Decline the pills but agree to the trip', next: 'decline-pills', effect: { safety: -10, clarity: -5, supportSystem: -5 }, icon: "fas fa-pills" },
+                    { text: 'Insist on seeing your family', next: 'insist-family', effect: { safety: -15, clarity: 5, supportSystem: 5 }, icon: "fas fa-home" },
+                    { text: 'Take a pill to avoid conflict', next: 'take-pill', effect: { safety: -25, clarity: -15, supportSystem: -10 }, icon: "fas fa-capsules" }
+                ]
+            },
+            'demand-help': {
+                text: `<p>You demand professional help. Derek scoffs: "You want me to see a shrink? I'm not crazy!" He paces angrily. "This is who I am! If you can't handle it..." He stops, seeing your expression.</p>
+                       <p>His tone shifts to pleading: "Please... don't give up on us. I'll change, I promise. Just don't make me see some stranger."</p>`,
+                choices: [
+                    { text: 'Compromise: couples counseling instead', next: 'couples-counseling', effect: { safety: -5, clarity: 5, supportSystem: 0 }, icon: "fas fa-heartbeat" },
+                    { text: 'Stand firm: "Individual therapy or I leave"', next: 'therapy-or-leave', effect: { safety: 10, clarity: 15, supportSystem: 5 }, icon: "fas fa-user-md" },
+                    { text: 'Drop the issue to keep the peace', next: 'drop-issue', effect: { safety: -15, clarity: -10, supportSystem: -10 }, icon: "fas fa-peace" }
+                ]
+            },
+            'pack-bag': {
+                text: `<p>You start packing a bag. Derek panics. "Where are you going? Don't leave me!" He blocks the doorway. "I need you! Please!" Tears stream down his face.</p>
+                       <p>When you try to move past him, he grabs your bag. "You can't go! Not after everything I've done for us!" His grip tightens on your arm.</p>`,
+                choices: [
+                    { text: 'Stay to calm him down', next: 'stay-calm', effect: { safety: -20, clarity: -10, supportSystem: -15 }, icon: "fas fa-hand-holding" },
+                    { text: 'Call Chloe on speakerphone', next: 'call-on-speaker', effect: { safety: 15, clarity: 10, supportSystem: 15 }, icon: "fas fa-phone-volume" },
+                    { text: 'Scream for help from neighbors', next: 'scream-help', effect: { safety: 20, clarity: 15, supportSystem: 10 }, icon: "fas fa-bell" }
+                ]
+            },
+
+            // Movie night path
+            'movie-night': {
+                text: `<p>Derek reluctantly agrees to a movie night. At first he seems calm, but halfway through the film, he becomes irritable. "This movie is stupid. Why do you always pick such boring things?" he snaps, throwing the remote against the wall.</p>
+                       <p>You try to calm him, but he turns his anger toward you. "You never care about what I want to do! Everything's always about you!" His voice rises as he stands over you.</p>`,
+                choices: [
+                    { text: 'Apologize and suggest another activity', next: 'apologize-activity', effect: { safety: -10, clarity: -5, supportSystem: -5 }, icon: "fas fa-dove" },
+                    { text: 'Stand up and create space between you', next: 'create-space', effect: { safety: 5, clarity: 10, supportSystem: 0 }, icon: "fas fa-arrows-alt-h" },
+                    { text: 'Text Chloe a code word you established for emergencies', next: 'emergency-code', effect: { safety: 15, clarity: 10, supportSystem: 15 }, icon: "fas fa-key" }
+                ]
+            },
+            'apologize-activity': {
+                text: `<p>You apologize and suggest playing a game instead. Derek's mood improves temporarily, but later that night when you decline sex, he becomes enraged. "After everything I've done for you tonight? This is how you repay me?"</p>
+                       <p>He grabs your wrist tightly, leaving fresh bruises. "You owe me," he hisses.</p>`,
+                choices: [
+                    { text: 'Submit to avoid further violence', next: 'ending-enabler', effect: { safety: -20, clarity: -15, supportSystem: -20 }, icon: "fas fa-user-slash" },
+                    { text: 'Knee him in the groin and lock yourself in the bathroom', next: 'self-defense', effect: { safety: 15, clarity: 20, supportSystem: 5 }, icon: "fas fa-shield-alt" }
+                ]
+            },
+            'create-space': {
+                text: `<p>You stand up and move to the other side of the room. "I need some space right now," you say firmly. Derek looks shocked at your assertiveness.</p>
+                       <p>"Oh, so now I'm not good enough to sit with you?" he sneers. "After I changed my plans for you? You're so ungrateful!" He storms out of the room, slamming the door so hard it cracks the frame.</p>`,
+                choices: [
+                    { text: 'Use this time to pack essentials and leave', next: 'escape-night', effect: { safety: 25, clarity: 20, supportSystem: 15 }, icon: "fas fa-running" },
+                    { text: 'Try to repair the damage in the morning', next: 'morning-repair', effect: { safety: -15, clarity: -10, supportSystem: -10 }, icon: "fas fa-sun" }
+                ]
+            },
+            'emergency-code': {
+                text: `<p>You text Chloe your emergency code. Within 15 minutes, she arrives with her brother. Derek is furious when they show up. "What the hell is this? Get out of my house!"</p>
+                       <p>Chloe steps forward. "She's coming with us. We know what happened last night." Derek tries to block your path, but Chloe's brother positions himself between you.</p>`,
+                choices: [
+                    { text: 'Leave with them immediately', next: 'ending-empowered', effect: { safety: 30, clarity: 25, supportSystem: 30 }, icon: "fas fa-car-side" },
+                    { text: 'Stay and try to calm Derek down', next: 'stay-calm', effect: { safety: -20, clarity: -15, supportSystem: -25 }, icon: "fas fa-hand-holding" }
+                ]
+            },
+
+            // Headache path
+            'headache': {
+                text: `<p>You claim a headache and stay home. Derek returns hours later, clearly intoxicated. "You weren't really sick, were you? You just didn't want to be with me!" he accuses, stumbling toward you.</p>
+                       <p>He grabs your face roughly. "Look at me when I'm talking to you!" His breath smells of alcohol as he invades your personal space.</p>`,
+                choices: [
+                    { text: 'Try to calm him down', next: 'calm-drunk', effect: { safety: -15, clarity: -5, supportSystem: -5 }, icon: "fas fa-hand-holding-heart" },
+                    { text: 'Retreat to the bedroom and lock the door', next: 'retreat-lock', effect: { safety: 10, clarity: 5, supportSystem: 0 }, icon: "fas fa-door-closed" },
+                    { text: 'Call 911', next: 'call-911', effect: { safety: 25, clarity: 15, supportSystem: 10 }, icon: "fas fa-phone-alt" }
+                ]
+            },
+            'calm-drunk': {
+                text: `<p>You speak softly and try to soothe him. "It's okay, Derek. I just wasn't feeling well. Let's sit down." For a moment he seems to calm, but then his expression darkens again.</p>
+                       <p>"You think I'm stupid? I know what you're doing!" He shoves you backward onto the couch. "You're just like everyone else - lying to me!"</p>`,
+                choices: [
+                    { text: 'Continue trying to de-escalate', next: 'deescalate', effect: { safety: -20, clarity: -10, supportSystem: -10 }, icon: "fas fa-om" },
+                    { text: 'Make a run for the front door', next: 'run-door', effect: { safety: 15, clarity: 15, supportSystem: 5 }, icon: "fas fa-door-open" }
+                ]
+            },
+            'retreat-lock': {
+                text: `<p>You lock yourself in the bedroom. Derek pounds on the door. "Open this door right now! How dare you lock me out of my own room!"</p>
+                       <p>After 20 minutes of pounding and threats, things go quiet. You hear glass breaking in the living room. Peeking out, you see Derek has passed out on the couch surrounded by broken picture frames.</p>`,
+                choices: [
+                    { text: 'Quietly gather essentials and leave', next: 'silent-escape', effect: { safety: 25, clarity: 20, supportSystem: 10 }, icon: "fas fa-shoe-prints" },
+                    { text: 'Clean up the mess and stay', next: 'clean-stay', effect: { safety: -15, clarity: -10, supportSystem: -15 }, icon: "fas fa-broom" }
+                ]
+            },
+            'call-911': {
+                text: `<p>You call 911 and whisper your situation. Police arrive within minutes. Derek becomes belligerent with officers. "This is my house! She's my girlfriend! Get out!"</p>
+                       <p>The officers see your bruises and Derek's intoxicated state. "Ma'am, would you like to press charges? We can take you to a safe place."</p>`,
+                choices: [
+                    { text: 'Press charges and go with police', next: 'ending-escape', effect: { safety: 35, clarity: 25, supportSystem: 20 }, icon: "fas fa-gavel" },
+                    { text: 'Decline charges but ask for escort to leave', next: 'escort-leave', effect: { safety: 25, clarity: 20, supportSystem: 15 }, icon: "fas fa-shield-alt" }
+                ]
+            },
+
+            // Cover path
+            'return-normal': {
+                text: `<p>You return pretending everything is normal. Derek seems satisfied but watches you closely. Over the next week, he becomes increasingly controlling - checking your phone, questioning your whereabouts, and isolating you from friends.</p>
+                       <p>One evening when you mention seeing Chloe, he snaps. "Why do you need her? Am I not enough for you?" He blocks her number on your phone and deletes your social media accounts.</p>`,
+                choices: [
+                    { text: 'Accept the isolation to keep peace', next: 'ending-isolation', effect: { safety: -15, clarity: -20, supportSystem: -25 }, icon: "fas fa-user-lock" },
+                    { text: 'Secretly contact Chloe at work', next: 'secret-contact', effect: { safety: 10, clarity: 15, supportSystem: 20 }, icon: "fas fa-user-secret" }
+                ]
+            },
+            'text-help': {
+                text: `<p>You text Chloe the truth. She responds immediately: "I'm coming over right now. Pack a bag." As you're gathering essentials, Derek bursts into the room.</p>
+                       <p>"Who are you texting? Give me your phone!" He tries to grab it from your hands. You hear Chloe's car pulling up outside.</p>`,
+                choices: [
+                    { text: 'Push past him and run to Chloe', next: 'ending-escape', effect: { safety: 30, clarity: 25, supportSystem: 30 }, icon: "fas fa-running" },
+                    { text: 'Try to reason with him one last time', next: 'last-reason', effect: { safety: -20, clarity: -10, supportSystem: -15 }, icon: "fas fa-comments" }
+                ]
+            },
+            'show-bruise': {
+                text: `<p>You confront Derek about the bruise. "Look what you did to me!" He stares at your arm, his face paling. "I... I didn't realize..."</p>
+                       <p>Suddenly his expression hardens. "But you made me do it! If you hadn't provoked me..." He steps closer, his hands clenching into fists.</p>`,
+                choices: [
+                    { text: 'Back away and call for help', next: 'call-for-help', effect: { safety: 20, clarity: 15, supportSystem: 10 }, icon: "fas fa-phone-alt" },
+                    { text: 'Stand your ground: "This is abuse"', next: 'confront-abuse', effect: { safety: -15, clarity: 10, supportSystem: 5 }, icon: "fas fa-gavel" }
+                ]
+            },
+
+            // Confide path
+            'find-help': {
+                text: `<p>You help Derek find substance abuse resources. He reluctantly agrees to call a helpline. After an hour on the phone, he seems hopeful.</p>
+                       <p>"They have a program starting Monday," he says. "But I need your support. Will you come with me to the first session?"</p>`,
+                choices: [
+                    { text: 'Agree to support him through recovery', next: 'support-recovery', effect: { safety: 5, clarity: 10, supportSystem: 5 }, icon: "fas fa-hands-helping" },
+                    { text: 'Set boundaries: "You go alone first"', next: 'set-boundaries', effect: { safety: 15, clarity: 20, supportSystem: 10 }, icon: "fas fa-border-style" }
+                ]
+            },
+            'space-to-think': {
+                text: `<p>You tell Derek you need space. He seems to accept it at first, but that night he shows up at your door drunk. "I can't live without you!" he sobs, banging on the door.</p>
+                       <p>Neighbors start peeking through their curtains. "Please let me in! I'll change, I promise!" His desperation turns to anger when you don't respond.</p>`,
+                choices: [
+                    { text: 'Call the police', next: 'police-intervention', effect: { safety: 30, clarity: 25, supportSystem: 20 }, icon: "fas fa-shield-alt" },
+                    { text: 'Let him in to calm him down', next: 'calm-down', effect: { safety: -20, clarity: -15, supportSystem: -15 }, icon: "fas fa-door-open" }
+                ]
+            },
+            'group-talk': {
+                text: `<p>You suggest all three of you talk. Derek reluctantly agrees. As Chloe expresses concern, Derek interrupts: "You don't know our relationship! Stop poisoning her against me!"</p>
+                       <p>When Chloe mentions the bruise she noticed, Derek explodes. "That was an accident! You're twisting everything!" He storms out, slamming the door.</p>`,
+                choices: [
+                    { text: 'Go after Derek to smooth things over', next: 'smooth-over', effect: { safety: -15, clarity: -10, supportSystem: -20 }, icon: "fas fa-dove" },
+                    { text: 'Stay with Chloe and make a safety plan', next: 'safety-plan', effect: { safety: 25, clarity: 20, supportSystem: 30 }, icon: "fas fa-clipboard-list" }
+                ]
+            },
+
+            // Confront path
+            'self-defense': {
+                text: `<p>You knee Derek in the groin and lock yourself in the bathroom. He howls in pain and pounds on the door. "You bitch! I'll make you pay for that!"</p>
+                       <p>As he tries to break down the door, you call 911. Police arrive within minutes. Derek tries to claim you attacked him, but your bruises tell a different story.</p>`,
+                choices: [
+                    { text: 'Press charges and get a restraining order', next: 'ending-justice', effect: { safety: 40, clarity: 35, supportSystem: 30 }, icon: "fas fa-balance-scale" },
+                    { text: 'Decline to press charges but leave immediately', next: 'leave-immediately', effect: { safety: 25, clarity: 20, supportSystem: 25 }, icon: "fas fa-walking" }
+                ]
+            },
+            'escape-night': {
+                text: `<p>You quietly pack essentials and slip out into the night. At Chloe's apartment, you collapse in tears. "I was so scared," you confess.</p>
+                       <p>Chloe helps you block Derek on everything. The next morning, he floods your email with apologies and threats. "Come back or you'll regret it!"</p>`,
+                choices: [
+                    { text: 'Change your number and move cities', next: 'ending-new-life', effect: { safety: 35, clarity: 30, supportSystem: 25 }, icon: "fas fa-city" },
+                    { text: 'Get a restraining order and stay with Chloe', next: 'ending-empowered', effect: { safety: 30, clarity: 25, supportSystem: 35 }, icon: "fas fa-user-shield" }
+                ]
+            },
+            'silent-escape': {
+                text: `<p>You gather essentials and slip out silently. The cool night air feels like freedom. At a 24-hour diner, you call a domestic violence hotline.</p>
+                       <p>"We have a bed for you," the counselor says. "Come straight here." As you leave, you see Derek's car speeding toward your location.</p>`,
+                choices: [
+                    { text: 'Take back streets to the shelter', next: 'ending-shelter', effect: { safety: 40, clarity: 30, supportSystem: 35 }, icon: "fas fa-home-heart" },
+                    { text: 'Call police to intercept him', next: 'ending-police', effect: { safety: 35, clarity: 25, supportSystem: 30 }, icon: "fas fa-police-box" }
+                ]
+            },
+            'deep-sleep-escape': {
+                text: `<p>You wait until Derek is in deep sleep, then carefully slip out from under his arm. Gathering your essentials, you tiptoe out of the apartment.</p>
+                       <p>At Chloe's place, you finally breathe freely. "I'm done," you whisper. "I'm never going back."</p>`,
+                choices: [
+                    { text: 'File a police report in the morning', next: 'ending-legal', effect: { safety: 30, clarity: 25, supportSystem: 30 }, icon: "fas fa-file-contract" },
+                    { text: 'Focus on healing without legal action', next: 'ending-healing', effect: { safety: 25, clarity: 30, supportSystem: 35 }, icon: "fas fa-spa" }
+                ]
+            },
+
+            // Additional paths
+            'call-chloe': {
+                text: `<p>You call Chloe to come get you immediately. Derek overhears and snatches the phone. "Who are you calling? We don't need anyone else!"</p>
+                       <p>You hear Chloe's voice through the phone: "I'm already on my way! Hang on!" Derek smashes your phone against the wall.</p>`,
+                choices: [
+                    { text: 'Lock yourself in the bathroom until she arrives', next: 'ending-rescue', effect: { safety: 25, clarity: 20, supportSystem: 35 }, icon: "fas fa-lock" },
+                    { text: 'Try to wrestle your car keys from him', next: 'key-struggle', effect: { safety: -15, clarity: 5, supportSystem: 10 }, icon: "fas fa-key" }
+                ]
+            },
+            'apologize-calm': {
+                text: `<p>You apologize and try to calm Derek. He continues speeding, swerving dangerously. "You think sorry fixes everything? You ruined my life!"</p>
+                       <p>He suddenly pulls over on a dark road. "Get out," he snarls. "Walk home. Maybe that will teach you respect."</p>`,
+                choices: [
+                    { text: 'Refuse to get out of the car', next: 'car-refusal', effect: { safety: -20, clarity: -10, supportSystem: -15 }, icon: "fas fa-car-side" },
+                    { text: 'Get out and call for help', next: 'roadside-help', effect: { safety: 15, clarity: 20, supportSystem: 15 }, icon: "fas fa-road" }
+                ]
+            },
+            'exit-car': {
+                text: `<p>You demand to get out of the car. Derek laughs bitterly. "In the middle of nowhere? Fine! See how you like it!" He slams the brakes.</p>
+                       <p>As you step onto the deserted road, he speeds away, leaving you stranded miles from home with no phone.</p>`,
+                choices: [
+                    { text: 'Walk to the nearest gas station for help', next: 'gas-station', effect: { safety: 10, clarity: 15, supportSystem: 5 }, icon: "fas fa-gas-pump" },
+                    { text: 'Flag down a passing car', next: 'flag-car', effect: { safety: 5, clarity: 10, supportSystem: 0 }, icon: "fas fa-car" }
+                ]
+            },
+            'text-location': {
+                text: `<p>You text Chloe your location and situation. She responds: "Police are on their way. Stall him!" Derek notices you texting.</p>
+                       <p>"Who are you messaging?" he demands, grabbing your phone. His face darkens as he reads the messages.</p>`,
+                choices: [
+                    { text: 'Run toward the approaching police lights', next: 'ending-police', effect: { safety: 35, clarity: 30, supportSystem: 25 }, icon: "fas fa-siren-on" },
+                    { text: 'Try to explain your fear', next: 'explain-fear', effect: { safety: -15, clarity: -5, supportSystem: -10 }, icon: "fas fa-comment-dots" }
+                ]
+            },
+            'secret-escape': {
+                text: `<p>You begin secretly planning your escape. Over the next week, you stash cash, gather documents, and arrange a place to stay. Derek seems suspicious.</p>
+                       <p>The night before your planned departure, he searches your bag. "What's this? You're leaving me?" His voice trembles with rage.</p>`,
+                choices: [
+                    { text: 'Admit your plans and try to reason', next: 'admit-plans', effect: { safety: -25, clarity: -10, supportSystem: -15 }, icon: "fas fa-comments" },
+                    { text: 'Implement emergency escape plan now', next: 'emergency-escape', effect: { safety: 30, clarity: 25, supportSystem: 20 }, icon: "fas fa-fire" }
+                ]
+            },
+
+            // Endings for all paths
+            'ending-isolation': {
+                title: 'Trapped and Alone',
+                icon: 'fas fa-lock',
+                text: `<p>You accept Derek's increasing control, cutting ties with friends and family. Over time, you become completely isolated. Derek's abuse escalates without witnesses.</p>
+                       <p>Without a support system, you lose the confidence to leave. Years pass in quiet desperation, your world shrinking to the walls Derek allows you to inhabit.</p>
+                       <div class="ending-tag">Ending: Complete Isolation</div>`,
+                ending: true
+            },
+            'ending-justice': {
+                title: 'Justice Served',
+                icon: 'fas fa-gavel',
+                text: `<p>You press charges against Derek. With photographic evidence and police reports, he's convicted of assault. The judge mandates anger management and substance abuse treatment.</p>
+                       <p>While the legal process is difficult, it empowers you. You join a survivors' network, using your experience to help others navigate the justice system.</p>
+                       <div class="ending-tag">Ending: Legal Justice</div>`,
+                ending: true
+            },
+            'ending-new-life': {
+                title: 'Fresh Start',
+                icon: 'fas fa-map-marked-alt',
+                text: `<p>You relocate to a new city, changing your number and deleting social media. With Chloe's support, you find a job and apartment in a community Derek can't find.</p>
+                       <p>Therapy helps you heal from the trauma. Two years later, you've built a peaceful life filled with healthy relationships and new dreams.</p>
+                       <div class="ending-tag">Ending: New Beginning</div>`,
+                ending: true
+            },
+            'ending-shelter': {
+                title: 'Safe Haven',
+                icon: 'fas fa-home-heart',
+                text: `<p>The domestic violence shelter provides safety and resources. Counselors help you process the trauma and plan your next steps. You meet other survivors who understand your journey.</p>
+                       <p>With their support, you secure a restraining order and begin rebuilding your life. The shelter's aftercare program provides ongoing support as you regain independence.</p>
+                       <div class="ending-tag">Ending: Shelter Protection</div>`,
+                ending: true
+            },
+            'ending-legal': {
+                title: 'Legal Protection',
+                icon: 'fas fa-file-contract',
+                text: `<p>You file a police report and obtain a restraining order. The legal process is challenging, but with victim advocates by your side, Derek is held accountable.</p>
+                       <p>He receives court-mandated counseling. You feel safer knowing the law protects you, and focus on your own healing journey with professional support.</p>
+                       <div class="ending-tag">Ending: Legal Safeguards</div>`,
+                ending: true
+            },
+            'ending-healing': {
+                title: 'Healing Journey',
+                icon: 'fas fa-spa',
+                text: `<p>You choose to focus on recovery rather than legal action. With therapy and support groups, you process the trauma and rebuild self-worth.</p>
+                       <p>Over time, you reclaim your identity outside the relationship. You establish healthy boundaries in all relationships and discover new passions that bring joy.</p>
+                       <div class="ending-tag">Ending: Emotional Recovery</div>`,
+                ending: true
+            },
+            'ending-rescue': {
+                title: 'Timely Rescue',
+                icon: 'fas fa-life-ring',
+                text: `<p>Chloe arrives with her brother just as Derek breaks through the bathroom door. They intervene physically, protecting you until police arrive.</p>
+                       <p>With their witness statements and your bruises, Derek is arrested. You enter a protection program, surrounded by people committed to your safety.</p>
+                       <div class="ending-tag">Ending: Friends' Intervention</div>`,
+                ending: true
+            },
+            'ending-boundaries': {
+                title: 'Firm Boundaries',
+                icon: 'fas fa-gavel',
+                text: `<p>You establish non-negotiable boundaries: sobriety, counseling, and zero physical contact during arguments. Derek initially resists but eventually complies when he realizes you'll leave otherwise.</p>
+                       <p>The relationship remains challenging, but your clear boundaries create safety. You maintain your support system and independence, ready to leave if boundaries are crossed again.</p>
+                       <div class="ending-tag">Ending: Boundaries Respected</div>`,
+                ending: true
+            },
+            'ending-rehabilitation': {
+                title: 'Path to Healing',
+                icon: 'fas fa-hand-holding-heart',
+                text: `<p>Derek follows through with rehab. After 90 days sober, he's a different person - taking accountability without excuses. You attend counseling together, rebuilding trust slowly.</p>
+                       <p>Two years later, you're cautiously happy. Derek remains active in his recovery, and you've established firm boundaries. While the scars remain, you've both grown through the pain.</p>
+                       <div class="ending-tag">Ending: Rehabilitation</div>`,
+                ending: true
+            },
+            'ending-empowered': {
+                title: 'New Beginnings',
+                icon: 'fas fa-dove',
+                text: `<p>With support, you escape and never look back. You press charges using documented evidence. The court mandates anger management and substance abuse treatment for Derek.</p>
+                       <p>You join a survivors' group and eventually help others escape similar situations. Though healing takes time, you rediscover your strength and build healthy relationships based on mutual respect.</p>
+                       <div class="ending-tag">Ending: Empowerment</div>`,
+                ending: true
+            },
+            'ending-trapped': {
+                title: 'Cycle of Pain',
+                icon: 'fas fa-infinity',
+                text: `<p>You remain in the relationship, hoping each apology is the last. But the abuse escalates. Bruises become fractures, verbal attacks become threats. You stop seeing friends and family, too ashamed to explain your injuries.</p>
+                       <p>One night, during an especially violent episode, you end up in the ER. Derek shows up crying, promising to change. You believe him again, trapped in the cycle of violence and remorse.</p>
+                       <div class="ending-tag">Ending: Trapped in the Cycle</div>`,
+                ending: true
+            },
+            'ending-wake-up': {
+                title: 'Painful Awakening',
+                icon: 'fas fa-exclamation-circle',
+                text: `<p>After a particularly violent incident where Derek breaks your wrist, something snaps. While he's passed out from substances, you quietly pack essentials and leave.</p>
+                       <p>With Chloe's help, you get a restraining order and enter a shelter. Therapy helps you understand the abuse wasn't your fault. The journey is hard, but with each day, you reclaim pieces of yourself.</p>
+                       <div class="ending-tag">Ending: Breaking Free</div>`,
+                ending: true
+            },
+            'ending-enabler': {
+                title: 'Lost Self',
+                icon: 'fas fa-user-slash',
+                text: `<p>You become Derek's caretaker, managing his emotions and covering for his behavior. You lose touch with friends and quit your job to "help him recover."</p>
+                       <p>Years pass in this pattern. When he's sober, he's loving; when using, he's terrifying. You've forgotten who you were before the relationship, your identity completely absorbed by his needs and crises.</p>
+                       <div class="ending-tag">Ending: The Enabler</div>`,
+                ending: true
+            },
+            'ending-escape': {
+                title: 'Emergency Escape',
+                icon: 'fas fa-running',
+                text: `<p>During a violent episode, you escape to safety. With photographic evidence and witness statements, Derek is arrested.</p>
+                       <p>You enter a domestic violence program, surrounded by support. Though traumatized, you feel overwhelming relief. With time and counseling, you rebuild a life free from fear.</p>
+                       <div class="ending-tag">Ending: Emergency Escape</div>`,
+                ending: true
+            }
+        };
+
+    
+        
+        // Initialize game
+        function initGame() {
+            updateStats();
+            createHearts();
+        }
+        
+        // Render scene
+        function renderScene(sceneId) {
+            const scene = scenes[sceneId];
+            const gameArea = document.getElementById('gameArea');
+            gameState.currentScene = sceneId;
+            gameState.progress = sceneId === 'start' ? 0 : Math.min(gameState.progress + 15, 100);
+            
+            if (scene.ending) {
+                gameArea.innerHTML = `
+                    <div class="ending-screen">
+                        <div class="ending-icon"><i class="${scene.icon}"></i></div>
+                        <h2 class="ending-title">${scene.title}</h2>
+                        <div class="ending-description">${scene.text}</div>
+                        <button class="restart-btn" onclick="restartGame()"><i class="fas fa-redo"></i> Play Again</button>
+                    </div>
+                `;
+            } else {
+                let choicesHTML = '';
+                scene.choices.forEach(choice => {
+                    choicesHTML += `
+                        <button class="choice-btn" data-next="${choice.next}">
+                            <i class="${choice.icon}"></i> ${choice.text}
+                        </button>
+                    `;
+                });
+                
+                gameArea.innerHTML = `
+                    <div class="scene fade-in">
+                        <div class="scene-text">${scene.text}</div>
+                        <div class="choices">${choicesHTML}</div>
+                    </div>
+                `;
+                
+                // Add event listeners to new choice buttons
+                document.querySelectorAll('.choice-btn').forEach(button => {
+                    button.addEventListener('click', function() {
+                        const nextScene = this.getAttribute('data-next');
+                        const choiceEffect = scene.choices.find(c => c.next === nextScene)?.effect;
+                        
+                        if (choiceEffect) {
+                            gameState.safety = Math.max(0, Math.min(100, gameState.safety + choiceEffect.safety));
+                            gameState.clarity = Math.max(0, Math.min(100, gameState.clarity + choiceEffect.clarity));
+                            gameState.supportSystem = Math.max(0, Math.min(100, gameState.supportSystem + choiceEffect.supportSystem));
+                            updateStats();
+                        }
+                        
+                        // Special scene handling
+                        if (nextScene === 'document') {
+                            gameState.documentedEvidence = true;
+                        }
+                        if (nextScene === 'show-bruise') {
+                            gameState.hasBeenPhysical = true;
+                        }
+                        
+                        // Check for ending conditions
+                        if (gameState.safety <= 15) {
+                            renderScene('ending-trapped');
+                        } else if (gameState.safety >= 85 && gameState.supportSystem >= 70) {
+                            renderScene('ending-empowered');
+                        } else {
+                            renderScene(nextScene);
+                        }
+                    });
+                });
+            }
+            
+            updateStats();
+        }
+        
+        // Restart game
+        function restartGame() {
+            gameState.safety = 40;
+            gameState.clarity = 50;
+            gameState.supportSystem = 60;
+            gameState.progress = 0;
+            gameState.hasBeenPhysical = false;
+            gameState.documentedEvidence = false;
+            renderScene('start');
+        }
+        
+        // Create decorative hearts
+        function createHearts() {
+            const body = document.querySelector('body');
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.classList.add('heart');
+                
+                const size = Math.random() * 30 + 10;
+                const posX = Math.random() * 100;
+                const posY = Math.random() * 100;
+                const duration = Math.random() * 10 + 15;
+                const delay = Math.random() * 5;
+                const opacity = Math.random() * 0.3 + 0.1;
+                
+                heart.style.width = `${size}px`;
+                heart.style.height = `${size}px`;
+                heart.style.left = `${posX}%`;
+                heart.style.top = `${posY}%`;
+                heart.style.opacity = opacity;
+                heart.style.animationDuration = `${duration}s`;
+                heart.style.animationDelay = `${delay}s`;
+                
+                body.appendChild(heart);
+            }
+        }
+        
+        // Initialize the game when page loads
+        window.onload = function() {
+            initGame();
+            renderScene('start');
+        };
+    </script>
+</body>
+</html>
