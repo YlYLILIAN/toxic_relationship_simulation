@@ -1,0 +1,202 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rewrite Me.</title>
+    <style>
+        /* 全局样式 */
+        body, html {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            font-family: Arial, sans-serif;
+        }
+        
+        /* Cover页面样式 */
+        #cover-page {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: flex-end;
+            align-items: flex-end;
+        }
+        
+        #cover-image {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        #start-button {
+            position: absolute;
+            margin: 30px;
+            padding: 10px 15px;
+            background: transparent;
+            border: none;
+            color:white;
+            font-size: 50px;
+            cursor: pointer;
+            opacity: 0.8;
+            transition: all 0.3s;
+        }
+        
+        #start-button:hover {
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            transform: scale(1.05);
+            opacity: 1;
+        }
+        
+        /* 关卡选择页面样式 */
+        #Scenario-select-page {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        #Scenario-select-bg {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -1;
+        }
+        
+        .enter-button {
+            position: absolute;
+            background: transparent;
+            border:none;
+            color:white;
+            font-size:24px;
+            cursor: pointer;
+            padding: 10px 0;
+            opacity: 0.8;
+            writing-mode: vertical-rl;
+            text-orientation:sideways;
+            transition: all 0.3s;
+            letter-spacing:4px;
+        }
+
+        .enter-button:hover {
+            opacity: 1;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+        }
+        
+        /* 四个角落的按钮位置 */
+        #enter-1 {
+            top: 31%;
+            left: 31%;
+        }
+        
+        #enter-2 {
+            top: 32%;
+            right: 32%;
+        }
+        
+        #enter-3 {
+            bottom: 8%;
+            left: 31.3%;
+        }
+        
+        #enter-4 {
+            bottom: 7%;
+            right: 31.5%;
+        }
+        
+        /* 关卡页面样式 */
+        #scenario-page {
+            width: 100%;
+            height: 100%;
+            display: none;
+        }
+        
+        #back-to-Scenarios {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.5);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <!-- Cover页面 -->
+    <div id="cover-page">
+        <img id="cover-image" src="assets/cover_page.png" alt="Game Cover">
+        <button id="start-button">START </button>
+    </div>
+    
+    <!-- 关卡选择页面 -->
+    <div id="Scenario-select-page">
+        <img id="Scenario-select-bg" src="assets/selection-bg.png" alt="Scenario Select Background">
+
+    <!-- 四个垂直排列的Enter按钮 -->
+        <!-- 在level-select-page部分修改按钮 -->
+        <button class="enter-button" id="enter-1" onclick="window.location.href='physical.html'">Enter</button>
+        <button class="enter-button" id="enter-2" onclick="window.location.href='Toxic_Tides.html'">Enter</button>
+        <button class="enter-button" id="enter-3" onclick="window.location.href='Fractured_Light.html'">Enter</button>
+        <button class="enter-button" id="enter-4" onclick="window.location.href='main.html'">Enter</button>
+
+</div>
+    
+    <!-- 关卡页面 - 这里可以替换为你已有的scenario HTML -->
+    <div id="scenario-page">
+       
+        <button id="back-to-Scenarios">BACK</button>
+    </div>
+    
+    <script>
+        // 页面切换逻辑
+        document.getElementById('start-button').addEventListener('click', function() {
+            document.getElementById('cover-page').style.display = 'none';
+            document.getElementById('Scenario-select-page').style.display = 'block';
+        });
+        
+        // 关卡选择逻辑
+        const enterButtons = document.querySelectorAll('.enter-button');
+        
+        // 修改按钮点击事件
+        enterButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                const Scenario = this.getAttribute('data-Scenario');
+                
+                // 使用fetch API加载关卡内容
+                fetch(`Scenario${Scenario}.html`)
+                    .then(response => response.text())
+                    .then(html => {
+                        document.getElementById('scenario-page').innerHTML = html;
+                        document.getElementById('Scenario-select-page').style.display = 'none';
+                        document.getElementById('scenario-page').style.display = 'block';
+                        
+                        // 添加返回按钮事件
+                        document.getElementById('back-to-Scenarios').addEventListener('click', function() {
+                            document.getElementById('scenario-page').style.display = 'none';
+                            document.getElementById('Scenario-select-page').style.display = 'block';
+                        });
+                    })
+                    .catch(error => console.error('Error loading Scenario:', error));
+            });
+        });
+
+
+        
+        // 返回关卡选择按钮
+        document.getElementById('back-to-Scenarios').addEventListener('click', function() {
+            document.getElementById('scenario-page').style.display = 'none';
+            document.getElementById('Scenario-select-page').style.display = 'block';
+        });
+    </script>
+</body>
+</html>
+
+
